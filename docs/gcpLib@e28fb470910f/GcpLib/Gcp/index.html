@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <title>Gcp (gcpLib@e28fb470910f.GcpLib.Gcp)</title>
+  <link rel="stylesheet" href="../../../odoc.css" />
+  <meta charset="utf-8" />
+  <meta name="generator" content="odoc 2.2.0" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <script src="../../../highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+<body class="odoc">
+  <header class="odoc-preamble">
+    <h1>Module <code><span>GcpLib.Gcp</span></code></h1>
+    <p>TPs Hiver 2021 - Langages de programmation (IFT-3000)</p>
+  </header>
+  <div class="odoc-content">
+    <p>Gestion de cours et de programmes.</p>
+    <p>Spécification</p>
+    <div class="odoc-spec">
+      <div class="spec exception anchored" id="exception-Non_Implante"><a href="#exception-Non_Implante"
+          class="anchor"></a><code><span><span class="keyword">exception</span> </span><span><span class="exception">Non_Implante</span> <span class="keyword">of</span> string</span></code>
+      </div>
+      <div class="spec-doc">
+        <p>Exception utilisée par le correcteur automatique.</p>
+      </div>
+    </div>
+    <p>-------------------------------------------------------------------------</p>
+    <p>Structures de données</p>
+    <p>-------------------------------------------------------------------------</p>
+    <div class="odoc-spec">
+      <div class="spec type anchored" id="type-cours"><a href="#type-cours"
+          class="anchor"></a><code><span><span class="keyword">type</span> cours</span><span> = <a href="#type-num_cours">num_cours</a> * <a href="#type-desc_cours">desc_cours</a></span></code>
+      </div>
+      <div class="spec-doc">
+        <p>Un cours associe une description à un numéro de cours.</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec type anchored" id="type-desc_cours"><a href="#type-desc_cours"
+          class="anchor"></a><code><span><span class="keyword">and</span> desc_cours</span><span> = </span><span>{</span></code>
+        <ol>
+          <li id="type-desc_cours.titre" class="def record field anchored"><a href="#type-desc_cours.titre"
+              class="anchor"></a><code><span>titre : <a href="#type-titre">titre</a>;</span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Titre du cours.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-desc_cours.credit" class="def record field anchored"><a href="#type-desc_cours.credit"
+              class="anchor"></a><code><span>credit : <a href="#type-credit">credit</a>;</span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Nombre de crédits.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-desc_cours.conco" class="def record field anchored"><a href="#type-desc_cours.conco"
+              class="anchor"></a><code><span>conco : <a href="#type-num_cours">num_cours</a>;</span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Cours concomittant.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-desc_cours.pre" class="def record field anchored"><a href="#type-desc_cours.pre"
+              class="anchor"></a><code><span>pre : <a href="#type-prealables">prealables</a>;</span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Conditions préalables.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-desc_cours.dept" class="def record field anchored"><a href="#type-desc_cours.dept"
+              class="anchor"></a><code><span>dept : <a href="#type-dept">dept</a>;</span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Département détenteur de cours.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-desc_cours.multi" class="def record field anchored"><a href="#type-desc_cours.multi"
+              class="anchor"></a><code><span>multi : <a href="#type-num_cours">num_cours</a>;</span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Cours multicycle correspondant.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-desc_cours.equiv" class="def record field anchored"><a href="#type-desc_cours.equiv"
+              class="anchor"></a><code><span>equiv : <a href="#type-num_cours">num_cours</a>;</span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Cours qu'on considère équivalent.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-desc_cours.offre" class="def record field anchored"><a href="#type-desc_cours.offre"
+              class="anchor"></a><code><span>offre : <span><span>(<a href="#type-session">session</a> * <a href="#type-fe">fe</a>)</span> list</span>;</span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Session et formule d'enseignement.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-desc_cours.dom" class="def record field anchored"><a href="#type-desc_cours.dom"
+              class="anchor"></a><code><span>dom : <span><a href="#type-domaine">domaine</a> list</span>;</span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Domaine d'application du cours.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+        </ol><code><span>}</span></code>
+      </div>
+      <div class="spec-doc">
+        <p>Type permettent de définir les différents attributs d'un cours.</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec type anchored" id="type-num_cours"><a href="#type-num_cours"
+          class="anchor"></a><code><span><span class="keyword">and</span> num_cours</span><span> = string</span></code>
+      </div>
+      <div class="spec-doc">
+        <p>Un numéro de cours comprend normalement un sigle composé de 3 caractères et un nombre composé de 4 chiffres,
+          tous les deux séparés par un tiret («-»).</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec type anchored" id="type-titre"><a href="#type-titre"
+          class="anchor"></a><code><span><span class="keyword">and</span> titre</span><span> = string</span></code>
+      </div>
+      <div class="spec-doc">
+        <p>Type permettant de définir le titre d'un cours.</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec type anchored" id="type-credit"><a href="#type-credit"
+          class="anchor"></a><code><span><span class="keyword">and</span> credit</span><span> = </span></code>
+        <ol>
+          <li id="type-credit.Cr" class="def variant constructor anchored"><a href="#type-credit.Cr"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">Cr</span> <span class="keyword">of</span> int</span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Nombre de crédits associé à un cours.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-credit.St" class="def variant constructor anchored"><a href="#type-credit.St"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">St</span> <span class="keyword">of</span> int</span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Nombre de crédits associé à un stage.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <div class="spec-doc">
+        <p>Un tel type représente soit un nombre de crédits pour un cours, soit un nombre de crédits associé à un stage.
+        </p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec type anchored" id="type-prealables"><a href="#type-prealables"
+          class="anchor"></a><code><span><span class="keyword">and</span> prealables</span><span> = </span></code>
+        <ol>
+          <li id="type-prealables.Aucun" class="def variant constructor anchored"><a href="#type-prealables.Aucun"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">Aucun</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Pas de préalables.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-prealables.CP" class="def variant constructor anchored"><a href="#type-prealables.CP"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">CP</span> <span class="keyword">of</span> <a href="#type-num_cours">num_cours</a></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Cours préalable.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-prealables.CCP" class="def variant constructor anchored"><a href="#type-prealables.CCP"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">CCP</span> <span class="keyword">of</span> <a href="#type-num_cours">num_cours</a></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Cours concomittant ou préalable.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-prealables.CRE" class="def variant constructor anchored"><a href="#type-prealables.CRE"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">CRE</span> <span class="keyword">of</span> int</span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Nombre de crédits minimum.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-prealables.OU" class="def variant constructor anchored"><a href="#type-prealables.OU"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">OU</span> <span class="keyword">of</span> <span><a href="#type-prealables">prealables</a> list</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Disjonction de préalables.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-prealables.ET" class="def variant constructor anchored"><a href="#type-prealables.ET"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">ET</span> <span class="keyword">of</span> <span><a href="#type-prealables">prealables</a> list</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Conjonction de préalables.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <div class="spec-doc">
+        <p>Type permettant de représenter les préalables d'un cours.</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec type anchored" id="type-dept"><a href="#type-dept"
+          class="anchor"></a><code><span><span class="keyword">and</span> dept</span><span> = string</span></code></div>
+      <div class="spec-doc">
+        <p>Type représentant le département détenteur d'un cours.</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec type anchored" id="type-session"><a href="#type-session"
+          class="anchor"></a><code><span><span class="keyword">and</span> session</span><span> = </span></code>
+        <ol>
+          <li id="type-session.Aut" class="def variant constructor anchored"><a href="#type-session.Aut"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">Aut</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Session d'automne.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-session.Hiv" class="def variant constructor anchored"><a href="#type-session.Hiv"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">Hiv</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Session d'hiver.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-session.Ete" class="def variant constructor anchored"><a href="#type-session.Ete"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">Ete</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Session d'été.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-session.Annee" class="def variant constructor anchored"><a href="#type-session.Annee"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">Annee</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>3 sessions de l'année.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <div class="spec-doc">
+        <p>Type permettant de représenter les sessions d'études. https://www.ulaval.ca/etudes/formules-denseignement</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec type anchored" id="type-fe"><a href="#type-fe"
+          class="anchor"></a><code><span><span class="keyword">and</span> fe</span><span> = </span></code>
+        <ol>
+          <li id="type-fe.P" class="def variant constructor anchored"><a href="#type-fe.P"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">P</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Cours en classe.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-fe.H" class="def variant constructor anchored"><a href="#type-fe.H"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">H</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Cours présentiel-hybride.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-fe.Y" class="def variant constructor anchored"><a href="#type-fe.Y"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">Y</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Cours à distance-hybride.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-fe.D" class="def variant constructor anchored"><a href="#type-fe.D"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">D</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Cours à distance synchrone ou asynchrone.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-fe.C" class="def variant constructor anchored"><a href="#type-fe.C"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">C</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Cours comodal.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-fe.A" class="def variant constructor anchored"><a href="#type-fe.A"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">A</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Ancien code: Cours en classe; équivalent à P</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-fe.Z1" class="def variant constructor anchored"><a href="#type-fe.Z1"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">Z1</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Ancien code: Cours à distance asynchrone; équivalent à D</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-fe.Z3" class="def variant constructor anchored"><a href="#type-fe.Z3"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">Z3</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Ancien code: Cours à distance synchrone; équivalent à D</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-fe.ZA" class="def variant constructor anchored"><a href="#type-fe.ZA"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">ZA</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Ancien code: Cours comodal; équivalent à P</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-fe.FEX" class="def variant constructor anchored"><a href="#type-fe.FEX"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">FEX</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Ancien code: Toute forme d'enseignement.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <div class="spec-doc">
+        <p>Type permettant de représenter des formules d'enseignement.</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec type anchored" id="type-domaine"><a href="#type-domaine"
+          class="anchor"></a><code><span><span class="keyword">and</span> domaine</span><span> = </span></code>
+        <ol>
+          <li id="type-domaine.GEN" class="def variant constructor anchored"><a href="#type-domaine.GEN"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">GEN</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Général.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-domaine.PROG" class="def variant constructor anchored"><a href="#type-domaine.PROG"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">PROG</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Programmation.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-domaine.SYS" class="def variant constructor anchored"><a href="#type-domaine.SYS"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">SYS</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Système.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-domaine.MAT" class="def variant constructor anchored"><a href="#type-domaine.MAT"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">MAT</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Mathématiques.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-domaine.STAT" class="def variant constructor anchored"><a href="#type-domaine.STAT"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">STAT</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Statistiques.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-domaine.LOG" class="def variant constructor anchored"><a href="#type-domaine.LOG"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">LOG</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Logique.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-domaine.THEO" class="def variant constructor anchored"><a href="#type-domaine.THEO"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">THEO</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Théorique.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-domaine.ANA_CON" class="def variant constructor anchored"><a href="#type-domaine.ANA_CON"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">ANA_CON</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Analyse et conception.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-domaine.NET" class="def variant constructor anchored"><a href="#type-domaine.NET"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">NET</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Réseaux.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-domaine.BD" class="def variant constructor anchored"><a href="#type-domaine.BD"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">BD</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Traitement de base de données.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-domaine.IA" class="def variant constructor anchored"><a href="#type-domaine.IA"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">IA</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Intelligence artificielle.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-domaine.SEC" class="def variant constructor anchored"><a href="#type-domaine.SEC"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">SEC</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Sécurité.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-domaine.GAME" class="def variant constructor anchored"><a href="#type-domaine.GAME"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">GAME</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Jeu vidéo.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-domaine.WEB" class="def variant constructor anchored"><a href="#type-domaine.WEB"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">WEB</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Technologie Web.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-domaine.BIO" class="def variant constructor anchored"><a href="#type-domaine.BIO"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">BIO</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>BioInfo.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-domaine.ENT" class="def variant constructor anchored"><a href="#type-domaine.ENT"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">ENT</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Entreprenariat.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-domaine.SIO" class="def variant constructor anchored"><a href="#type-domaine.SIO"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">SIO</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Système d'information organisationnel.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-domaine.LANG" class="def variant constructor anchored"><a href="#type-domaine.LANG"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">LANG</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Langues.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-domaine.CHM" class="def variant constructor anchored"><a href="#type-domaine.CHM"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">CHM</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Chimie.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-domaine.DD" class="def variant constructor anchored"><a href="#type-domaine.DD"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">DD</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Développement durable.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-domaine.ECO" class="def variant constructor anchored"><a href="#type-domaine.ECO"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">ECO</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Économie.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <div class="spec-doc">
+        <p>Type permettant de représenter des domaines de savoir.</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec type anchored" id="type-programme"><a href="#type-programme" class="anchor"></a><code><span><span class="keyword">type</span> programme</span><span> =
+  <a href="#type-desc_pgm">desc_pgm</a>
+  * <a href="#type-titre">titre</a>
+  * <span><a href="#type-session">session</a> list</span>
+  * <span>(int * <span><span>(string * <a href="#type-exigences">exigences</a>)</span> list</span>)</span>
+  * <span>(int * <span><span>(string * <a href="#type-exigences">exigences</a>)</span> list</span>)</span>
+  * <span><a href="#type-concentration">concentration</a> list</span></span></code></div>
+      <div class="spec-doc">
+        <p>Un programme d'études est défini comme un tuple de valeurs : (décrit type, domaine savoir, #crédits, #années
+          * discipline du programme * sessions d'admission * exigences au niveau des activités de formation obligatoire,
+          définies sous forme de liste de règles * exigences au niveau des activités de formation à option, définies
+          sous forme de liste de règles * liste de concentrations)</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec type anchored" id="type-desc_pgm"><a href="#type-desc_pgm"
+          class="anchor"></a><code><span><span class="keyword">and</span> desc_pgm</span><span> = <a href="#type-type_pro">type_pro</a> * string * int * int</span></code>
+      </div>
+      <div class="spec-doc">
+        <p>la description d'un programme est la donnée d'un quadruplet</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec type anchored" id="type-type_pro"><a href="#type-type_pro"
+          class="anchor"></a><code><span><span class="keyword">and</span> type_pro</span><span> = </span></code>
+        <ol>
+          <li id="type-type_pro.Bacc" class="def variant constructor anchored"><a href="#type-type_pro.Bacc"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">Bacc</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Baccalauréat</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-type_pro.Cert" class="def variant constructor anchored"><a href="#type-type_pro.Cert"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">Cert</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Certificat</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-type_pro.MP" class="def variant constructor anchored"><a href="#type-type_pro.MP"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">MP</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Microprogramme</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-type_pro.Mast" class="def variant constructor anchored"><a href="#type-type_pro.Mast"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">Mast</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Maitrise avec stages</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-type_pro.MM" class="def variant constructor anchored"><a href="#type-type_pro.MM"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">MM</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Maitrise avec mémoire</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-type_pro.Doct" class="def variant constructor anchored"><a href="#type-type_pro.Doct"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">Doct</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Doctorat</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <div class="spec-doc">
+        <p>Le type de programme</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec type anchored" id="type-exigences"><a href="#type-exigences"
+          class="anchor"></a><code><span><span class="keyword">and</span> exigences</span><span> = </span></code>
+        <ol>
+          <li id="type-exigences.CoursOB" class="def variant constructor anchored"><a href="#type-exigences.CoursOB"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">CoursOB</span> <span class="keyword">of</span> int * <span><a href="#type-num_cours">num_cours</a> list</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Liste de cours obligatoires totalisant un nombre de crédits</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-exigences.PlageCr" class="def variant constructor anchored"><a href="#type-exigences.PlageCr"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">PlageCr</span> <span class="keyword">of</span> int * int * <a href="#type-exigences_ext">exigences_ext</a></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Choix au niveau exigences respectant un interval de crédits</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <div class="spec-doc">
+        <p>Exigences du programme définies sous forme de type algébrique</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec type anchored" id="type-exigences_ext"><a href="#type-exigences_ext"
+          class="anchor"></a><code><span><span class="keyword">and</span> exigences_ext</span><span> = </span></code>
+        <ol>
+          <li id="type-exigences_ext.Cours" class="def variant constructor anchored"><a href="#type-exigences_ext.Cours"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">Cours</span> <span class="keyword">of</span> <span><a href="#type-num_cours">num_cours</a> list</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Liste de cours précisés au choix</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-exigences_ext.CoursExclus" class="def variant constructor anchored"><a
+              href="#type-exigences_ext.CoursExclus"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">CoursExclus</span> <span class="keyword">of</span> <span><a href="#type-num_cours">num_cours</a> list</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Liste de cours ou motifs de cours exclus</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec type anchored" id="type-concentration"><a href="#type-concentration"
+          class="anchor"></a><code><span><span class="keyword">and</span> concentration</span><span> = string * <span>(int * <span><a href="#type-exigences">exigences</a> list</span>)</span></span></code>
+      </div>
+      <div class="spec-doc">
+        <p>Concentrations définies dans un programme : (Nom de la concentration * Nombre de crédits à atteindre * les
+          exigences)</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec type anchored" id="type-choix"><a href="#type-choix"
+          class="anchor"></a><code><span><span class="keyword">type</span> choix</span><span> = </span></code>
+        <ol>
+          <li id="type-choix.Min" class="def variant constructor anchored"><a href="#type-choix.Min"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">Min</span></span></code></li>
+          <li id="type-choix.Max" class="def variant constructor anchored"><a href="#type-choix.Max"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">Max</span></span></code></li>
+          <li id="type-choix.Plein" class="def variant constructor anchored"><a href="#type-choix.Plein"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">Plein</span></span></code></li>
+          <li id="type-choix.Interv" class="def variant constructor anchored"><a href="#type-choix.Interv"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">Interv</span> <span class="keyword">of</span> int * int</span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Type permettant de préciser le nombre de crédits à viser pour un choix de cours</p><span
+                class="comment-delim">*)</span>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+    <p>-------------------------------------------------------------------------</p>
+    <p>Interface: fonctions exportées</p>
+    <p>-------------------------------------------------------------------------</p>
+    <p>Fonctions utilitaires exportées (pour pouvoir les tester/utiliser dans l'interpréteur)</p>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-(++)"><a href="#val-(++)"
+          class="anchor"></a><code><span><span class="keyword">val</span> (++) : <span><span><span class="type-var">'a</span> list</span> <span class="arrow">&#45;&gt;</span></span> <span><span><span class="type-var">'a</span> list</span> <span class="arrow">&#45;&gt;</span></span> <span><span class="type-var">'a</span> list</span></span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>l1 ++ l2</code> ajoute aux éléments de <code>l1</code> les éléments de <code>l2</code> qui n'y figurent
+          pas déjà.</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-(--)"><a href="#val-(--)"
+          class="anchor"></a><code><span><span class="keyword">val</span> (--) : <span><span><span class="type-var">'a</span> list</span> <span class="arrow">&#45;&gt;</span></span> <span><span><span class="type-var">'a</span> list</span> <span class="arrow">&#45;&gt;</span></span> <span><span class="type-var">'a</span> list</span></span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>l1 -- l2</code> retire des éléments de <code>l1</code> les éléments de <code>l2</code>.</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-explode"><a href="#val-explode"
+          class="anchor"></a><code><span><span class="keyword">val</span> explode : <span>string <span class="arrow">&#45;&gt;</span></span> <span>char list</span></span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>explode s</code> retire une liste des caractères de <code>s</code>.</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-eql"><a href="#val-eql"
+          class="anchor"></a><code><span><span class="keyword">val</span> eql : <span><span><span class="type-var">'a</span> list</span> <span class="arrow">&#45;&gt;</span></span> <span><span><span class="type-var">'a</span> list</span> <span class="arrow">&#45;&gt;</span></span> bool</span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>eql l1 l2</code> retourne vrai si els 2 listes <code>l1</code> et <code>l2</code> comprennent les mêmes
+          éléments, indépendemment de l'ordre de leur apparition.</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-est_alpha"><a href="#val-est_alpha"
+          class="anchor"></a><code><span><span class="keyword">val</span> est_alpha : <span>char <span class="arrow">&#45;&gt;</span></span> bool</span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>est_alpha c</code> teste si <code>c</code> est un caractère alphabétique.</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-est_num"><a href="#val-est_num"
+          class="anchor"></a><code><span><span class="keyword">val</span> est_num : <span>char <span class="arrow">&#45;&gt;</span></span> bool</span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>est_num c</code> teste si <code>c</code> est un caractère numérique.</p>
+      </div>
+    </div>
+    <p>Fonctions exportées</p>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-ret_descr"><a href="#val-ret_descr"
+          class="anchor"></a><code><span><span class="keyword">val</span> ret_descr : <span><span><a href="#type-cours">cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span><a href="#type-num_cours">num_cours</a> <span class="arrow">&#45;&gt;</span></span> <a href="#type-desc_cours">desc_cours</a></span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>ret_descr bcours c</code> retourne, à partir du bassin de cours <code>bcours</code>, la description
+          d'un cours <code>c</code>.</p>
+        <ul class="at-tags">
+          <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
+            <p>si le cours <code>c</code> n'est pas défini dans <code>bcours</code>. Par contre, la fonction ne soulève
+              d'exceptions si le cours <code>c</code> ou les cours mentionnés dans <code>bcours</code> ne respectent le
+              format ###-$$$$.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-nc_eq"><a href="#val-nc_eq"
+          class="anchor"></a><code><span><span class="keyword">val</span> nc_eq : <span><span><a href="#type-cours">cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span><a href="#type-num_cours">num_cours</a> <span class="arrow">&#45;&gt;</span></span> <span><a href="#type-num_cours">num_cours</a> <span class="arrow">&#45;&gt;</span></span> bool</span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>nc_eq bcours nc1 nc2</code> teste si 2 cours <code>nc1</code> et <code>nc2</code> sont égaux ou
+          équivalents.</p>
+        <ul class="at-tags">
+          <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
+            <p>un des 2 cours <code>nc1</code> ou <code>nc2</code> n'est pas défini dans <code>bcours</code>
+              (l'exception pourrait avoir été soulevée par une autre fonction appelée dans le corps de
+              <code>nc_eq</code>).</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-ret_sig_num_motif"><a href="#val-ret_sig_num_motif"
+          class="anchor"></a><code><span><span class="keyword">val</span> ret_sig_num_motif : <span>string <span class="arrow">&#45;&gt;</span></span> string * string</span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>ret_sig_num m</code> retourne une paire de chaines de caractères, comprenant respectivement le sigle et
+          le numéro de <code>m</code>.</p>
+        <ul class="at-tags">
+          <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
+            <p>si <code>m</code> ne respecte pas un des formats proposés dans la documentation de la fonction
+              <code>respecte_motif</code>.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-ret_sig_num"><a href="#val-ret_sig_num"
+          class="anchor"></a><code><span><span class="keyword">val</span> ret_sig_num : <span><a href="#type-num_cours">num_cours</a> <span class="arrow">&#45;&gt;</span></span> string * string</span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>ret_sig_num c</code> retourne une paire de chaines de caractères, comprenant respectivement le sigle et
+          le numéro de <code>c</code>.</p>
+        <ul class="at-tags">
+          <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
+            <p>si <code>c</code> ne respecte pas le motif suivant ###-$$$$ (# représentant un caractère alphabétique; $
+              représentant un chiffre).</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-respecte_motif"><a href="#val-respecte_motif"
+          class="anchor"></a><code><span><span class="keyword">val</span> respecte_motif : <span><a href="#type-num_cours">num_cours</a> <span class="arrow">&#45;&gt;</span></span> <span>string <span class="arrow">&#45;&gt;</span></span> bool</span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>respecte_motif c m</code> vérifie si le cours <code>c</code> respecte le motif <code>m</code>.</p>
+        <ul class="at-tags">
+          <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
+            <p>si le motif <code>m</code> ne respecte pas un des formats suivants:</p>
+            <ul>
+              <li>&quot;*-*&quot; pour désigner tous les cours possibles;</li>
+              <li>&quot;*-I&quot; pour désigner tous les cours de 1er cycle (dont le numéro débute par 1, 2, 3 ou 4);
+              </li>
+              <li>&quot;*-#*&quot; pour désigner tous les cours ayant un numéro qui débute par #;</li>
+              <li>&quot;*-####&quot; pour désigner tous les cours ayant le numéro ####.</li>
+              <li>&quot;###-*&quot; pour désigner tous les cours ayant un sigle ###;</li>
+              <li>&quot;###-I&quot; pour désigner tous les cours de 1er cycle ayant un sigle ###;</li>
+              <li>&quot;###-$*&quot; pour désigner tous les cours ayant ayant un sigle ### et un numéro qui débute par
+                $;</li>
+              <li>&quot;###-$$$$&quot; pour désigner le cours ayant un sigle ### et un numéro $$$$.</li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="at-tags">
+          <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
+            <p>si le cours <code>c</code> ne respecte pas le motif ###-$$$$ (l'exception pourrait avoir été soulevée par
+              une autre fonction appelée dans le corps de <code>respecte_motif</code>).</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-pr2str"><a href="#val-pr2str"
+          class="anchor"></a><code><span><span class="keyword">val</span> pr2str : <span><a href="#type-prealables">prealables</a> <span class="arrow">&#45;&gt;</span></span> string</span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>pr2str pr</code> retourne, sous forme de chaine de caractères, le préalable <code>pr</code> passé en
+          argument.</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-existe_pr"><a href="#val-existe_pr"
+          class="anchor"></a><code><span><span class="keyword">val</span> existe_pr : <span><a href="#type-prealables">prealables</a> <span class="arrow">&#45;&gt;</span></span> <span><a href="#type-prealables">prealables</a> <span class="arrow">&#45;&gt;</span></span> bool</span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>existe_pr pr pr'</code> vérifie si le préalable <code>pr'</code> comprend le préalable <code>pr</code>
+          (dans le sens qu'on retrouve <code>pr</code> dans <code>pr'</code>). En particulier:</p>
+        <ul>
+          <li>«Aucun» est considéré comme seulement inclus dans «Aucun»;</li>
+          <li>«CRE n» ne peut être inclus que dans un préalable identique;</li>
+          <li>«CP <code>c</code>» peut être inclus dans un «CP» similaire, ou un «CCP» associé au même cours
+            <code>c</code>;</li>
+          <li>«CCP <code>c</code>» ne peut être inclus que dans un préalable identique;</li>
+          <li>un prérequis <code>pr</code> de type «CP», «CCP», ou «CRE» est inclus dans un prérequis de type «OU
+            <code>lpr</code>», ou «ET <code>lpr</code>», si on retrouve un prérequis
+            <code>pr</code><sub><code>2</code></sub> dans la liste <code>lpr</code> tel que <code>pr</code> est inclus
+            dans <code>pr</code><sub><code>2</code></sub>;</li>
+          <li>un prérequis <code>pr</code> de type «OU» est inclus dans un prérequis de type «ET <code>lpr</code>» si on
+            retrouve un prérequis <code>pr</code><sub><code>2</code></sub> dans la liste <code>lpr</code> tel que
+            <code>pr</code> est inclus dans <code>pr</code><sub><code>2</code></sub>;</li>
+          <li>un prérequis <code>pr</code> de type «ET» est inclus dans un prérequis de type «OU <code>lpr</code>» si on
+            retrouve un prérequis <code>pr</code><sub><code>2</code></sub> dans la liste <code>lpr</code> tel que
+            <code>pr</code> est inclus dans <code>pr</code><sub><code>2</code></sub>;</li>
+          <li>un prérequis <code>pr</code> de type «OU <code>lpr</code><sub><code>1</code></sub>» est inclus dans un
+            prérequis de type «OU <code>lpr</code><sub><code>2</code></sub>» si soit pour tous les prérequis
+            <code>pr</code><sub><code>1</code></sub> présents dans <code>lpr</code><sub><code>1</code></sub>, on
+            retrouve un prérequis <code>pr</code><sub><code>2</code></sub> dans la liste
+            <code>lpr</code><sub><code>2</code></sub> tel que <code>pr</code><sub><code>1</code></sub> est inclus dans
+            <code>pr</code><sub><code>2</code></sub>, soit on retrouve un prérequis
+            <code>pr</code><sub><code>2</code></sub> dans la liste <code>lpr</code><sub><code>2</code></sub> tel que
+            <code>pr</code> est inclus dans <code>pr</code><sub><code>2</code></sub>;</li>
+          <li>un prérequis <code>pr</code> de type «ET <code>lpr</code><sub><code>1</code></sub>» est inclus dans un
+            prérequis de type «ET <code>lpr</code><sub><code>2</code></sub>» si soit pour tous les prérequis
+            <code>pr</code><sub><code>1</code></sub> présents dans <code>lpr</code><sub><code>1</code></sub>, on
+            retrouve un prérequis <code>pr</code><sub><code>2</code></sub> dans la liste
+            <code>lpr</code><sub><code>2</code></sub> tel que <code>pr</code><sub><code>1</code></sub> est inclus dans
+            <code>pr</code><sub><code>2</code></sub>, soit on retrouve un prérequis
+            <code>pr</code><sub><code>2</code></sub> dans la liste <code>lpr</code><sub><code>2</code></sub> tel que
+            <code>pr</code> est inclus dans <code>pr</code><sub><code>2</code></sub>.</li>
+        </ul>
+        <p>Remarque: il n'est pas nécessaire de valider que tous les cours mentionnés éventuellement dans
+          <code>pr</code> ou <code>pr'</code> respectent le format ###-$$$$ (autrement dit, la fonction
+          <code>existe_pr</code> n'est pas censée soulever des exceptions).</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-lc_dans_pr"><a href="#val-lc_dans_pr"
+          class="anchor"></a><code><span><span class="keyword">val</span> lc_dans_pr : <span><a href="#type-prealables">prealables</a> <span class="arrow">&#45;&gt;</span></span> <span><a href="#type-num_cours">num_cours</a> list</span></span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>lc_dans_pr pr</code> retourne la liste des numéros de cours mentionnés dans le préalable
+          <code>pr</code>. Le résultat ne comprend qu'une seule occurence de chaque cours; et l'ordre des numéros de
+          cours n'importe pas.</p>
+        <p>Remarque: il n'est pas nécessaire de valider que tous les cours mentionnés éventuellement dans
+          <code>pr</code> respectent le format ###-$$$$ (autrement dit, la fonction <code>lc_dans_pr</code> n'est pas
+          censée soulever des exceptions).</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-respecte_pr"><a href="#val-respecte_pr"
+          class="anchor"></a><code><span><span class="keyword">val</span> respecte_pr : <span><span><a href="#type-num_cours">num_cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span>int <span class="arrow">&#45;&gt;</span></span> <span><span><a href="#type-num_cours">num_cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span><a href="#type-prealables">prealables</a> <span class="arrow">&#45;&gt;</span></span> bool</span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>respecte_pr lco tcr lc pr</code> teste si, considérant une liste de cours <code>lco</code> déjà suivis
+          et réussis, et du total <code>tcr</code> des crédits obtenus, et d'une liste de cours <code>lc</code>
+          envisagés, un préalable <code>pr</code> est respecté.</p>
+        <p>Remarque: il n'est pas nécessaire de valider que tous les cours mentionnés dans <code>lco</code>,
+          <code>lc</code> et éventuellement dans <code>pr</code> respectent le format ###-$$$$ (autrement dit, la
+          fonction <code>respecte_pr</code> n'est pas censée soulever des exceptions).</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-total_cr"><a href="#val-total_cr"
+          class="anchor"></a><code><span><span class="keyword">val</span> total_cr : <span>?avec_stage:bool <span class="arrow">&#45;&gt;</span></span> <span><span><a href="#type-cours">cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span><span><a href="#type-num_cours">num_cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> int</span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>total_cr bcours lc</code> retourne, à partir du bassin de cours <code>bcours</code>, le total des
+          crédits des cours mentionnés dans <code>lc</code>. À noter que si un cours de <code>lc</code> correspond à un
+          stage (crédits définis à l'aide du constructeur «<code>St</code>»), on comptabilise 0 crédit pour ce cours, à
+          moins que le paramètre optionnel <code>Avec_stage</code> vaut true.</p>
+        <ul class="at-tags">
+          <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
+            <p>si un des cours présents dans <code>lc</code> n'est pas défini dans <code>bcours</code> (l'exception
+              pourrait avoir été soulevée par une autre fonction appelée dans le corps de <code>total_cr</code>). Par
+              contre, il n'est pas nécessaire de valider que tous les cours mentionnés dans <code>lc</code> ou
+              <code>bcours</code> respectent le format ###-$$$$.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-lc_absents"><a href="#val-lc_absents"
+          class="anchor"></a><code><span><span class="keyword">val</span> lc_absents : <span><span><a href="#type-cours">cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span><a href="#type-num_cours">num_cours</a> list</span></span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>lc_absents bcours</code> retourne la liste des numéros de cours mentionnés dans la partie «description»
+          du bassin de cours <code>bcours</code> mais non définis dans celui-ci. Le résultat ne comprend qu'une seule
+          occurence de chaque cours; et l'ordre des numéros de cours n'importe pas.</p>
+        <p>Remarque: il n'est pas nécessaire de valider que tous les cours mentionnés dans <code>bcours</code>
+          respectent le format ###-$$$$ (autrement dit, la fonction <code>lc_absents</code> n'est pas censée soulever
+          des exceptions).</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-ret_bcours_lmot"><a href="#val-ret_bcours_lmot"
+          class="anchor"></a><code><span><span class="keyword">val</span> ret_bcours_lmot : <span><span>string list</span> <span class="arrow">&#45;&gt;</span></span> <span><span><a href="#type-cours">cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span><a href="#type-cours">cours</a> list</span></span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>ret_bcours_lmot lmot bcours</code> retourne, à partir du bassin de cours <code>bcours</code>, les cours
+          dont le numéro respecte un des motifs précisés dans <code>lmot</code>. L'ordre des éléments de la liste
+          résultante n'importe pas.</p>
+        <ul class="at-tags">
+          <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
+            <p>si un des motifs de <code>lmot</code> ne respecte pas un des formats précisés pour la fonction <a
+                href="#val-respecte_motif"><code>respecte_motif</code></a>. De même, si un cours mentionné dans
+              <code>bcours</code> ne respecte pas le format ###-$$$$, une exception sera soulevée. À notez que dans les
+              2 cas de figure, l'exception sera sûrement soulevée par une fonction appelée dans le corps de la fonction
+              <code>ret_bcours_lmot</code>.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-ret_bcours_lses_lfe"><a href="#val-ret_bcours_lses_lfe"
+          class="anchor"></a><code><span><span class="keyword">val</span> ret_bcours_lses_lfe : <span><span><a href="#type-session">session</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span><span><a href="#type-fe">fe</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span><span><a href="#type-cours">cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span><a href="#type-cours">cours</a> list</span></span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>ret_bcours_lses_lfe lses lfe bcours</code> retourne, à partir du bassin de cours <code>bcours</code>,
+          les cours qui sont offerts dans une des sessions présentes dans <code>lses</code>, et qui sont donnés par une
+          des formules d'enseignement présentes dans <code>lfe</code>. Si l'une des listes <code>lses</code> ou
+          <code>lfe</code> est vide, on considéra qu'elles comprennent respectivement les valeurs «Annee» et «FEX».
+          L'ordre des éléments de la liste résultante n'importe pas.</p>
+        <p>Remarque: il n'est pas nécessaire de valider que tous les cours mentionnés dans <code>bcours</code>
+          respectent le format ###-$$$$ (autrement dit, la fonction <code>ret_bcours_lses_lfe</code> n'est pas censée
+          soulever des exceptions).</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-ret_bcours_ldom"><a href="#val-ret_bcours_ldom"
+          class="anchor"></a><code><span><span class="keyword">val</span> ret_bcours_ldom : <span><span><a href="#type-domaine">domaine</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span><span><a href="#type-cours">cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span><a href="#type-cours">cours</a> list</span></span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>ret_bcours_ldom ld bcours</code> retourne, à partir du bassin de cours <code>bcours</code>, les cours
+          qui appartiennent à l'un des domaines précisé dans <code>ld</code>. L'ordre des éléments de la liste
+          résultante n'importe pas.</p>
+        <p>Remarque: il n'est pas nécessaire de valider que tous les cours mentionnés dans <code>bcours</code>
+          respectent le format ###-$$$$ (autrement dit, la fonction <code>ret_bcours_dom</code> n'est pas censée
+          soulever des exceptions).</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-ret_bcours_pr"><a href="#val-ret_bcours_pr"
+          class="anchor"></a><code><span><span class="keyword">val</span> ret_bcours_pr : <span><a href="#type-prealables">prealables</a> <span class="arrow">&#45;&gt;</span></span> <span><span><a href="#type-cours">cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span><a href="#type-cours">cours</a> list</span></span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>ret_bcours_pr pr bcours</code> retourne, à partir du bassin de cours <code>bcours</code>, les cours
+          dont le préalable inclut <code>pr</code>. L'ordre des éléments de la liste résultante n'importe pas.</p>
+        <p>Remarque: il n'est pas nécessaire de valider que tous les cours mentionnés dans <code>bcours</code> et
+          éventuellement dans <code>pr</code> respectent le format ###-$$$$ (autrement dit, la fonction
+          <code>ret_bcours_pr</code> n'est pas censée soulever des exceptions).</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-ret_bcours_admissibles"><a href="#val-ret_bcours_admissibles"
+          class="anchor"></a><code><span><span class="keyword">val</span> ret_bcours_admissibles : <span><span><a href="#type-num_cours">num_cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span>int <span class="arrow">&#45;&gt;</span></span> <span><span><a href="#type-cours">cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span><a href="#type-cours">cours</a> list</span></span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>ret_bcours_admissibles lco tcr bcours</code> retourne, en considérant une liste de cours
+          <code>lco</code> déjà suivis et réussis, et du total <code>tcr</code> des crédits obtenus, la liste des cours
+          présents dans le bassin de cours <code>bcours</code>, non mentionnés dans <code>lco</code> (aussi, si un cours
+          admet un cours équivalent qui est présent dans la liste <code>lco</code>, il ne doit non plus être retenu), et
+          dont les préalables sont respectés. Aussi, dans la liste résultante, si un cours est mentionné dans l'attribut
+          «conco» d'un des cours <code>c</code> de la liste, il doit alors soit figurer dans cette liste, soit figurer
+          dans <code>lco</code>. Par ailleurs, l'ordre des éléments de la liste résultante n'importe pas.</p>
+        <p>Remarque: il n'est pas nécessaire de valider que tous les cours mentionnés dans <code>bcours</code> et
+          <code>lco</code> respectent le format ###-$$$$ (autrement dit, la fonction <code>ret_bcours_admissibles</code>
+          n'est pas censée soulever des exceptions).</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-construit_liste_choix"><a href="#val-construit_liste_choix"
+          class="anchor"></a><code><span><span class="keyword">val</span> construit_liste_choix : 
+  <span><span>(<span><span class="type-var">'a</span> <span class="arrow">&#45;&gt;</span></span> <span><span class="type-var">'a</span> <span class="arrow">&#45;&gt;</span></span> bool)</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span>(<span><span><span class="type-var">'a</span> list</span> <span class="arrow">&#45;&gt;</span></span> <span><span><span class="type-var">'a</span> list</span> <span class="arrow">&#45;&gt;</span></span> bool)</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span><span class="type-var">'a</span> list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span><span class="type-var">'a</span> list</span> list</span></span></code></div>
+      <div class="spec-doc">
+        <p><code>construit_liste_choix eq1 eq2 lst</code> retourne une liste de combinaisons (listes) de k éléments
+          sélectionnés parmi n éléments de la liste <code>lst</code>. Le paramètre <code>eq1</code> permet d'éviter les
+          doublons dans les sous-listes résultantes; le paramètre <code>eq2</code> permet d'éviter les doublons dans la
+          liste résultante.</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-respecte_regle"><a href="#val-respecte_regle"
+          class="anchor"></a><code><span><span class="keyword">val</span> respecte_regle : 
+  <span><span><a href="#type-cours">cours</a> list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span><a href="#type-num_cours">num_cours</a> list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><a href="#type-exigences">exigences</a> <span class="arrow">&#45;&gt;</span></span>
+  int * <a href="#type-exigences">exigences</a> * <span><a href="#type-num_cours">num_cours</a> list</span></span></code></div>
+      <div class="spec-doc">
+        <p><code>respecte_regle bcours lc regle</code> confronte la liste <code>lc</code> avec la règle
+          <code>regle</code> de type <a href="#type-exigences"><code>exigences</code></a>. Elle retourne un triplet
+          composé du nombre de crédits obtenus avec la liste <code>lc</code>, considérant la règle <code>regle</code>,
+          d'une nouvelle version de la règle qui tient compte des cours de <code>lc</code> qui ont partiellement ou
+          totalement respecté la règle, ainsi que la liste des cours de <code>lc</code> qui ne sont concernés par la
+          règle.</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-conc_obtenues"><a href="#val-conc_obtenues"
+          class="anchor"></a><code><span><span class="keyword">val</span> conc_obtenues : <span><span><a href="#type-cours">cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span><a href="#type-programme">programme</a> <span class="arrow">&#45;&gt;</span></span> <span><span><a href="#type-num_cours">num_cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span>string list</span></span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>conc_obtenues bcours pgm lco</code> la liste des concentrations obtenues dans le programme
+          <code>pgm</code> étant donnée la liste <code>lco</code> de cours réussis. Dans ce Tp, on suppose qu'un même
+          cours peut contribuer à l'atteinte de deux concentrations ou plus.</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-ou_en_suis_je"><a href="#val-ou_en_suis_je" class="anchor"></a><code><span><span class="keyword">val</span> ou_en_suis_je : 
+  <span><span><a href="#type-cours">cours</a> list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><a href="#type-programme">programme</a> <span class="arrow">&#45;&gt;</span></span>
+  <span><span><a href="#type-num_cours">num_cours</a> list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span>(string * int * <a href="#type-exigences">exigences</a>)</span> list</span>
+  * <span>(int * int)</span>
+  * <span><span>(string * int * <a href="#type-exigences">exigences</a>)</span> list</span>
+  * <span>(int * int)</span>
+  * <span><a href="#type-num_cours">num_cours</a> list</span></span></code></div>
+      <div class="spec-doc">
+        <p><code>ou_en_suis_je bcours pgm lco</code> permet de savoir où on se situe dans le programme <code>pgm</code>
+          considérant la liste <code>lco</code> de cours réussis. La fonction retourne un triplet composé de: la liste
+          des règles qui demeurent à respecter pour la partie «Activités de formation obligatoires» du programme et une
+          paire de nombres précisant le nombre de crédits exigés pour cette partie ainsi que le nombre de crédits
+          obtenus; la liste des règles qui demeurent à respecter pour la partie «Autres exigences» du programme et une
+          paire de nombres précisant le nombre de crédits exigés pour cette partie ainsi que le nombre de crédits
+          obtenus; et la liste des cours de <code>lco</code> qui n'auront contribué à une des exigences du programme.
+        </p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-respecte_conco"><a href="#val-respecte_conco"
+          class="anchor"></a><code><span><span class="keyword">val</span> respecte_conco : <span><span><a href="#type-cours">cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span><span><a href="#type-num_cours">num_cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span><span><a href="#type-num_cours">num_cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> bool</span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>respecte_conco bcours lco lc</code> permet de tester si les cours présents dans la liste
+          <code>lc</code> sont corrects par rapport à l'exigence des «cours concomitants», considérant les cours
+          <code>lco</code> déjà réussis.</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-choix_cours_admissibles"><a href="#val-choix_cours_admissibles"
+          class="anchor"></a><code><span><span class="keyword">val</span> choix_cours_admissibles : 
+  <span><span><a href="#type-cours">cours</a> list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span><a href="#type-num_cours">num_cours</a> list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><a href="#type-session">session</a> <span class="arrow">&#45;&gt;</span></span>
+  <span><span><a href="#type-fe">fe</a> list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><a href="#type-choix">choix</a> <span class="arrow">&#45;&gt;</span></span>
+  <span><span><a href="#type-num_cours">num_cours</a> list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span><a href="#type-num_cours">num_cours</a> list</span> list</span></span></code></div>
+      <div class="spec-doc">
+        <p><code>choix_cours_admissibles bcours lco session lfe ch lc</code> retourne la liste des différentes
+          combinaisons de cours de <code>lc</code> respectant un ensemble de critères: chaque cours, de chaque
+          combinaison de cours, est admissible au niveau des préalables qu'il requiert, par rapport aux cours
+          <code>lco</code> déjà réussis; s'il requiert un nombre de crédits minimum (de cours du programme) accumulés
+          dans son cheminement, il doit le respecter; aussi, il doit être offert à la session <code>session</code> avec
+          une formule d'enseignement précisée dans la liste <code>lfe</code> (si cette liste est vide, il n'y a aucune
+          contrainte sur la formule d'enseignement). De plus, chaque combinaison de cours doit totaliser un nombre de
+          crédits respectant le choix <code>ch</code> de type <a href="#type-choix"><code>choix</code></a>.</p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-planifier_session"><a href="#val-planifier_session"
+          class="anchor"></a><code><span><span class="keyword">val</span> planifier_session : 
+  <span><span><a href="#type-cours">cours</a> list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><a href="#type-programme">programme</a> <span class="arrow">&#45;&gt;</span></span>
+  <span><span><a href="#type-num_cours">num_cours</a> list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><a href="#type-session">session</a> <span class="arrow">&#45;&gt;</span></span>
+  <span><span><a href="#type-fe">fe</a> list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><a href="#type-choix">choix</a> <span class="arrow">&#45;&gt;</span></span>
+  <span><span>string list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span><a href="#type-num_cours">num_cours</a> list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span>(<span><a href="#type-num_cours">num_cours</a> list</span> * <span>string list</span>)</span> list</span></span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>planifier_session bcours pgm lco session lfe ch lmm lc_hp</code> retourne la liste des listes de cours
+          admissibles pour l'inscription à la session <code>session</code>, avec une formule d'enseignement précisée
+          dans la liste <code>lfe</code> (si cette liste est vide, il n'y a aucune contrainte sur la formule
+          d'enseignement), considérant la liste <code>lco</code> des cours déjà réussis. Chaque liste de cours
+          admissibles est accompagnée par la liste des nouvelles concentrations qu'on obtiendrait avec ce choix de cours
+          («nouvelles», c'est-à-dire, en plus des concentrations déjà acquises). Notez que dans la construction des
+          différentes listes de cours résultantes, on privilégie en priorité l'inscription au maximum de cours
+          obligatoires admissibles et par la suite, on complète avec les cours à option admissibles. Chaque liste de
+          cours admissibles doit totaliser un nombre de crédits respectant le choix <code>ch</code> de type <a
+            href="#type-choix"><code>choix</code></a>. Finalement, l'argument <code>lc_hp</code> permet de limiter le
+          nombre de cours à considérer pour les règles utilisant des motifs de cours (avec le constructeur
+          «CoursExclus»); ainsi les cours considérés pour ce type de règles sont issus de ce paramètre modulo le fait
+          qu'ils sont admissibles (respect des préalables; offert à la session précisée avec la bonne formule
+          d'enseignement); de même pour le paramètre <code>lm</code> qui permet de limiter le nombre de cours à
+          considérer au niveau des autres règles (constructeurs «Cours» et «CoursOB»).</p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <title>Tp1 (tp1@e28fb470910f.Tp1)</title>
+  <link rel="stylesheet" href="../../odoc.css" />
+  <meta charset="utf-8" />
+  <meta name="generator" content="odoc 2.2.0" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <script src="../../highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+<body class="odoc">
+  <header class="odoc-preamble">
+    <h1>Module <code><span>Tp1</span></code></h1>
+    <p>TP1 Hiver 2023 - Langages de programmation (IFT-3000)</p>
+  </header>
+  <div class="odoc-content">
+    <p>Gestion de cours et de programmes - Cohérence d'un programme</p>
+    <p>Spécification</p>
+    <p>Interface: fonctions exportées et à implanter</p>
+    <p>Fonctions utilitaires exportées - dans le cadre de la réalisation de votre travail, vous pouvez préciser des
+      signatures de fonctions, si vous voulez pouvoir les tester dans l'interpréteur.</p>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-eq_pr"><a href="#val-eq_pr"
+          class="anchor"></a><code><span><span class="keyword">val</span> eq_pr : <span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-prealables">GcpLib.Gcp.prealables</a> <span class="arrow">&#45;&gt;</span></span> <span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-prealables">GcpLib.Gcp.prealables</a> <span class="arrow">&#45;&gt;</span></span> bool</span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>eq_pr pr pr'</code> teste si 2 préalables <code>pr</code> et <code>pr'</code> passés en argument sont
+          égaux. Notons que <code>ET [lst]</code> est égal à <code>ET [lst']</code> si les 2 listes comprennent
+          exactement les mêmes préalables (l'ordre d'apparition de ces préalables dans chaque liste n'ayant aucune
+          importance; de même pour la possible présence de <code>Aucun</code> dans chaque liste); il en est de même pour
+          <code>OU [lst]</code>.</p>
+        <p>Remarque: il n'est pas nécessaire de valider que tous les cours mentionnés éventuellement dans
+          <code>pr</code> ou <code>pr'</code> respectent le format ###-$$$$ (autrement dit, la fonction
+          <code>eq_pr</code> n'est pas censée soulever des exceptions).</p>
+        <p>Exemples:</p>
+        <p><code># eq_pr (OU []) (OU []);;
+- : bool = true
+</code></p>
+        <p><code># eq_pr (ET []) (ET []);;
+- : bool = true
+</code></p>
+        <p><code># eq_pr (ET []) (OU []);;
+- : bool = false
+</code></p>
+        <p><code># eq_pr (ET [CP &quot;a&quot;; CP &quot;b&quot;]) (ET [CP &quot;b&quot;; CP &quot;a&quot;]);;
+- : bool = true
+</code></p>
+        <p><code># eq_pr (
+  OU [CP &quot;c&quot;; (ET [CP &quot;a&quot;; CP &quot;b&quot;])]
+  ) (
+  OU [(ET [CP &quot;b&quot;; CP &quot;a&quot;]); CP &quot;c&quot;]
+);;
+- : bool = true
+</code></p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-prerequis"><a href="#val-prerequis" class="anchor"></a><code><span><span class="keyword">val</span> prerequis : 
+  <span><span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-cours">GcpLib.Gcp.cours</a> list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-num_cours">GcpLib.Gcp.num_cours</a> <span class="arrow">&#45;&gt;</span></span>
+  <a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-prealables">GcpLib.Gcp.prealables</a></span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>prerequis bcours c</code> retourne toutes la chaine de prérequis du cours <code>c</code> considérant
+          une banque de cours <code>bcours</code>. Notre que cette chaine de prérequis peut mentionner un même cours à
+          plusieurs reprises.</p>
+        <ul class="at-tags">
+          <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
+            <p>si le cours <code>c</code> n'est pas défini dans <code>bcours</code> (l'exception pourrait avoir été
+              soulevée par une autre fonction appelée dans le corps de <code>prerequis</code>).</p>
+            <p>Exemples:</p>
+            <p><code># prerequis bcours &quot;IFT-1004&quot;;;
+- : Gcp.prealables = Aucun
+</code></p>
+            <p><code># prerequis bcours &quot;GIF-1003&quot;;;
+- : Gcp.prealables = OU [CP &quot;IFT-1004&quot;; CP &quot;GLO-1901&quot;]
+</code></p>
+            <p><code># prerequis bcours &quot;IFT-2008&quot;;;
+- : Gcp.prealables = 
+  OU
+  [ET [CP &quot;GIF-1003&quot;; OU [CP &quot;IFT-1004&quot;; CP &quot;GLO-1901&quot;]];
+    ET [CP &quot;IFT-1006&quot;; OU [CP &quot;IFT-1004&quot;; CP &quot;GLO-1901&quot;]]]
+    </code></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-extrait_lc"><a href="#val-extrait_lc"
+          class="anchor"></a><code><span><span class="keyword">val</span> extrait_lc : <span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-exigences">GcpLib.Gcp.exigences</a> <span class="arrow">&#45;&gt;</span></span> <span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-num_cours">GcpLib.Gcp.num_cours</a> list</span></span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>extrait_lc e</code> extrait la liste des cours mentionnés dans une exigence de programme définie avec
+          le constructeur <code>CoursOB</code> ou <code>PlageCr</code> (pour ce dernier cas, on se restreint aux cours
+          définis avec le constructeur <code>Cours</code>).</p>
+        <p>Remarque: il n'est pas nécessaire de valider que tous les cours mentionnés éventuellement dans <code>e</code>
+          respectent le format ###-$$$$ (autrement dit, la fonction <code>extrait_lc</code> n'est pas censée soulever
+          des exceptions).</p>
+        <p>Exemples:</p>
+        <p><code># extrait_lc (CoursOB (6, [&quot;IFT-1000&quot;; &quot;A&quot;]));;
+- : Gcp.num_cours list = [&quot;IFT-1000&quot;; &quot;A&quot;]
+</code></p>
+        <p><code># extrait_lc (PlageCr (6,9, Cours [&quot;IFT-1000&quot;; &quot;IFT-3000&quot;; &quot;MAT-1919&quot;]));;
+- : Gcp.num_cours list = [&quot;IFT-1000&quot;; &quot;IFT-3000&quot;; &quot;MAT-1919&quot;]
+</code></p>
+        <p><code># extrait_lc (PlageCr (6,9, CoursExclus [&quot;GIF-*&quot;; &quot;FRN-*&quot;; &quot;GEL-1001&quot;]));;
+- : Gcp.num_cours list = []
+</code></p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-extrait_lc_exclus"><a href="#val-extrait_lc_exclus"
+          class="anchor"></a><code><span><span class="keyword">val</span> extrait_lc_exclus : <span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-exigences">GcpLib.Gcp.exigences</a> <span class="arrow">&#45;&gt;</span></span> <span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-num_cours">GcpLib.Gcp.num_cours</a> list</span></span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>extrait_lc_exclus e</code> extrait la liste des cours mentionnés dans une exigence de programme défini
+          avec le constructeur <code>PlageCr</code> puis <code>CoursExclus</code>.</p>
+        <p>Remarque: il n'est pas nécessaire de valider que tous les cours mentionnés éventuellement dans <code>e</code>
+          respectent un des formats requis par la fonction <code>respecte_motif</code> (définie dans <code>Gcp</code>)
+          (autrement dit, la fonction <code>extrait_lc_exclus</code> n'est pas censée soulever des exceptions).</p>
+        <p>Exemples:</p>
+        <p><code># extrait_lc_exclus (PlageCr (6, 9, CoursExclus [&quot;GIF-*&quot;; &quot;A&quot;]));;
+- : Gcp.num_cours list = [&quot;GIF-*&quot;; &quot;A&quot;]
+</code></p>
+        <p><code># extrait_lc_exclus (PlageCr (3,6, Cours [&quot;IFT-3000&quot;; &quot;MAT-1919&quot;]));;
+- : Gcp.num_cours list = []
+</code></p>
+        <p><code># extrait_lc_exclus (CoursOB (6, [&quot;IFT-1000&quot;; &quot;IFT-3000&quot;]));;
+- : Gcp.num_cours list = []
+</code></p>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-verif_e"><a href="#val-verif_e" class="anchor"></a><code><span><span class="keyword">val</span> verif_e : 
+  <span><span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-cours">GcpLib.Gcp.cours</a> list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-exigences">GcpLib.Gcp.exigences</a> <span class="arrow">&#45;&gt;</span></span>
+  <span>(int * int)</span> * bool</span></code></div>
+      <div class="spec-doc">
+        <p><code>verif_e bcours e</code> vérifie que le nombre de crédits mentionnés dans une exigence est cohérent:</p>
+        <ul>
+          <li>pour une exigence de type <code>CoursOB(n,l)</code>, la fonction vérifie que le total de crédits des cours
+            présents dans la liste <code>l</code> vaut bien <code>n</code>; il retourne le total de crédits calculé,
+            suivi du même nombre, suivi d'une valeur booléenne résultat de la comparaison;</li>
+          <li>pour une exigence de type <code>PlageCr(n1,n2,Cours l)</code>, la fonction vérifie que que la valeur
+            <code>n2</code> est bien supérieure ou égale à <code>n1</code> et que le total de crédits des cours présents
+            dans la liste <code>l</code> est bien plus grand ou égal à <code>n2</code>; il retourne <code>n1</code> et
+            <code>n2</code> suivi du résultat de la comparaison;</li>
+          <li>pour une exigence de type <code>PlageCr(n1,n2,CoursExclus l)</code>, la fonction retourne les 2 valeurs
+            <code>n1</code> et <code>n2</code> suivies d'un test vérifiant que <code>n2</code> est bien supérieure ou
+            égale à <code>n1</code>.</li>
+        </ul>
+        <p>Remarque: le nombre de crédits pour un cours n'est pas nécessairement 3. Aussi, pour les cours de stage, on
+          doit considérer 0 crédit.</p>
+        <ul class="at-tags">
+          <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
+            <p>si un des cours de <code>e</code> n'est pas dans le bassin de cours. (l'exception pourrait avoir été
+              soulevée par une autre fonction appelée dans le corps de <code>verif_e</code>).</p>
+            <p>Exemples:</p>
+            <p><code># verif_e bcours (PlageCr (6, 9, CoursExclus [&quot;GIF-*&quot;; &quot;FRN-*&quot;]));;
+- : ((6, 9), true)
+</code></p>
+            <p><code># verif_e bcours (PlageCr (3, 6, Cours [&quot;IFT-1000&quot;; &quot;IFT-3000&quot;]));;
+- : ((3, 6), true)
+</code></p>
+            <p><code># verif_e bcours (CoursOB (6, [&quot;IFT-1000&quot;; &quot;IFT-3000&quot;]));;
+- : ((6, 6), true)
+</code></p>
+            <p><code># verif_e bcours (CoursOB (6, [&quot;IFT-1000&quot;; &quot;IFT-2580&quot;]));;
+- : ((3, 3), false)
+</code></p>
+            <p><code># verif_e bcours (CoursOB (3, [&quot;IFT-1000&quot;; &quot;IFT-2580&quot;]));;
+- : ((3, 3), true)
+</code></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-existe_motif"><a href="#val-existe_motif"
+          class="anchor"></a><code><span><span class="keyword">val</span> existe_motif : <span><span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-cours">GcpLib.Gcp.cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span>string <span class="arrow">&#45;&gt;</span></span> bool</span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>existe_motif bcours m</code> teste si il existe au moins un cours, dans le bassin de cours
+          <code>bcours</code>, qui respecte le motif <code>m</code>.</p>
+        <ul class="at-tags">
+          <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
+            <p>si le motif <code>m</code> ne respecte pas un des formats requis par la fonction
+              <code>respecte_motif</code> (définie dans <code>Gcp</code>) (l'exception pourrait avoir été soulevée par
+              une autre fonction appelée dans le corps de <code>existe_motif</code>).</p>
+            <p>Exemples:</p>
+            <p><code># existe_motif bcours &quot;*-3000&quot;;;
+- : bool = true
+</code></p>
+            <p><code># existe_motif bcours &quot;IFT-3000&quot;;;
+- : bool = true
+</code></p>
+            <p><code># existe_motif bcours &quot;allo&quot;;;
+Exception: Failure &quot;&lt;allo&gt;: mauvais motif!&quot;.
+</code></p>
+            <p><code># existe_motif bcours &quot;*-1009&quot;;;
+- : bool = false
+</code></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-existe_cours"><a href="#val-existe_cours"
+          class="anchor"></a><code><span><span class="keyword">val</span> existe_cours : <span><span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-cours">GcpLib.Gcp.cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span><span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-num_cours">GcpLib.Gcp.num_cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> bool</span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>existe_cours bcours lc</code> teste si tous les cours présents dans <code>lc</code> sont bien définis
+          dans le bassin de cours <code>bcours</code>. Notons que les éléments de <code>lc</code> peuvent soit être des
+          numéros de cours, soit des motifs de cours.</p>
+        <ul class="at-tags">
+          <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
+            <p>si un des éléments de <code>lc</code> ne respecte pas un des formats requis par la fonction
+              <code>respecte_motif</code> (définie dans <code>Gcp</code>). (l'exception pourrait avoir été soulevée par
+              une autre fonction appelée dans le corps de <code>existe_cours</code>).</p>
+            <p>Exemples:</p>
+            <p><code># existe_cours bcours [&quot;GIF-*&quot;; &quot;IFT-1000&quot;];;
+- : bool = true
+</code></p>
+            <p><code># existe_cours bcours [&quot;*-1009&quot;];;
+- : bool = false
+</code></p>
+            <p><code># existe_cours bcours [&quot;*.*&quot;; &quot;IFT-1000&quot;];;
+Exception: Failure &quot;&lt;*.*&gt;: mauvais motif!&quot;.
+</code></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-verif_conc"><a href="#val-verif_conc"
+          class="anchor"></a><code><span><span class="keyword">val</span> verif_conc : <span><span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-cours">GcpLib.Gcp.cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-concentration">GcpLib.Gcp.concentration</a> <span class="arrow">&#45;&gt;</span></span> bool</span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>verif_conc bcours conc</code> vérifie que la concentration <code>conc</code> est valide. Plus
+          précisément, étant donné une concentration <code>conc</code>, toutes les exigences qui y sont définies sont
+          vérifiées, et le total des minimus et maximums de crédits des exigences doivent borner le nombre de crédits de
+          la concentration.</p>
+        <ul class="at-tags">
+          <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
+            <p>si un des cours présent dans <code>conc</code> n'est pas dans le bassin de cours (l'exception pourrait
+              avoir été soulevée par une autre fonction appelée dans le corps de <code>verif_conc</code>).</p>
+            <p>Exemples:</p>
+            <p><code># verif_conc bcours ( &quot;Jeux vidéos&quot;,
+  ( 6,
+    [
+      PlageCr
+        ( 6,
+          6,
+          Cours [ &quot;GIF-4104&quot;; &quot;GLO-2003&quot;; &quot;GLO-3004&quot; ] );
+    ] ) );;
+- : bool = true
+</code></p>
+            <p><code># verif_conc bcours (&quot;Jeux vidéos&quot;,
+  (9,
+  [ PlageCr (9, 9, Cours [ &quot;GIF-4104&quot;; &quot;GLO-2003&quot; ]) ]
+));;
+- : bool = false
+</code></p>
+            <p><code># verif_conc bcours (
+  &quot;Jeux vidéos&quot;,
+  (9, [ PlageCr (9, 9, Cours [ &quot;GIF-4104&quot;; &quot;5&quot; ]) ]
+));;
+Exception: Failure &quot;Cours &lt;5&gt; inexistant!&quot;.
+</code></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-verif_credits"><a href="#val-verif_credits"
+          class="anchor"></a><code><span><span class="keyword">val</span> verif_credits : <span><span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-cours">GcpLib.Gcp.cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-programme">GcpLib.Gcp.programme</a> <span class="arrow">&#45;&gt;</span></span> bool</span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>verif_credits bcours pgm</code> vérifie que les totaux de crédits définis dans un programme
+          <code>pgm</code> sont corrects. Plus précisément, étant donné un <code>pgm</code> qui est défini par
+          <code>((_,_, total, _),_,_,(n1,e1),(n2,e2),concs)</code>:</p>
+        <ul>
+          <li>les exigences de <code>e1</code> sont vérifiées;</li>
+          <li>les exigences de <code>e2</code> sont vérifiées;</li>
+          <li>le total des crédits des cours définis dans <code>e1</code> vaut <code>n1</code>;</li>
+          <li>le minimum et le maximum de crédits des cours définis dans <code>e2</code> bornent <code>n2</code>;</li>
+          <li>les concentrations sont vérifiées;</li>
+          <li>la somme de <code>n1</code> et <code>n2</code> vaut bien <code>total</code>. Le calcul du nombre de
+            crédits se fait comme suit:</li>
+          <li>Pour une exigence de type <code>CoursOB(n,l)</code>, il s'agit simplement de calculer la somme des crédits
+            des cours présents dans <code>l</code> (qui doit être égale à <code>n</code>);</li>
+          <li>Pour une exigence de type <code>PlageCr(n1,n2,Cours l)</code>, il s'agit de calculer la somme des crédits
+            des cours présents dans <code>l</code> (qui doit être comprise entre <code>n1</code> et <code>n2</code>);
+          </li>
+          <li>Pour une exigence de type <code>PlageCr(n1,n2,CoursExclus l)</code>, on ne peut calculer de somme de
+            crédits; on peut simplement considérer que la somme est comprise entre <code>n1</code> et <code>n2</code>;
+            on doit aussi vérifier que <code>n2</code> est bien supérieure ou égale à <code>n1</code>.</li>
+        </ul>
+        <ul class="at-tags">
+          <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
+            <p>si un des éléments de <code>pgm</code> ne respecte pas un des formats requis par la fonction
+              <code>respecte_motif</code> (définie dans <code>Gcp</code>). (l'exception pourrait avoir été soulevée par
+              une autre fonction appelée dans le corps de <code>verif_credits</code>).</p>
+            <p>Exemples:</p>
+            <p><code># verif_credits bcours b_ift;;
+- : bool = true
+</code></p>
+            <p><code># verif_credits bcours b_glo;;
+- : bool = true
+</code></p>
+            <p><code># verif_credits bcours c_ift;;
+- : bool = true
+</code></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-coherence_cours_conc"><a href="#val-coherence_cours_conc"
+          class="anchor"></a><code><span><span class="keyword">val</span> coherence_cours_conc : 
+  <span><span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-concentration">GcpLib.Gcp.concentration</a> list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-num_cours">GcpLib.Gcp.num_cours</a> list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-num_cours">GcpLib.Gcp.num_cours</a> list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-num_cours">GcpLib.Gcp.num_cours</a> list</span> <span class="arrow">&#45;&gt;</span></span>
+  bool</span></code></div>
+      <div class="spec-doc">
+        <p><code>coherence_cours_conc lconc lc_ob lc_op lc_exclus</code> vérifie que les cours dans les concentrations
+          <code>lconc</code> ne se retrouvent pas dans des cours obligatoires, représentés par la liste
+          <code>lc_ob</code>, mais plutôt dans les cours optionnels ou hors discipline représentés resp. par les listes
+          <code>lc_op</code> et <code>lc_exclus</code>. Attention <code>lc_exclus</code> pourrait être vide.</p>
+        <ul class="at-tags">
+          <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
+            <p>si un des éléments de <code>lconc</code> ou <code>lc_exclus</code> ne respecte pas un des formats requis
+              par la fonction <code>respecte_motif</code> (définie dans <code>Gcp</code>). (l'exception pourrait avoir
+              été soulevée par une autre fonction appelée dans le corps de <code>coherence_cours_conc</code>).</p>
+            <p>Exemple: Voir exemples dans `testeur.ml`</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-verif_pre"><a href="#val-verif_pre" class="anchor"></a><code><span><span class="keyword">val</span> verif_pre : 
+  <span><span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-cours">GcpLib.Gcp.cours</a> list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-num_cours">GcpLib.Gcp.num_cours</a> list</span> <span class="arrow">&#45;&gt;</span></span>
+  <span><span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-num_cours">GcpLib.Gcp.num_cours</a> list</span> <span class="arrow">&#45;&gt;</span></span>
+  bool</span></code></div>
+      <div class="spec-doc">
+        <p><code>verif_pre bcours lc1 lc2</code> vérifie que les préalables des cours de la liste <code>lc1</code> sont
+          satisfiables par la liste de cours <code>lc2</code>. La liste <code>lc2</code> ne comprenant que des numéros
+          de cours, un préalable de type <code>CRE _</code> ou <code>Aucun</code> est toujours satisfait.</p>
+        <ul class="at-tags">
+          <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
+            <p>si un des cours présent dans <code>lc1</code> n'est pas dans le bassin de cours (l'exception pourrait
+              avoir été soulevée par une autre fonction appelée dans le corps de <code>verif_pre</code>).</p>
+            <p>Exemples:</p>
+            <p><code># verif_pre bcours
+  [ &quot;IFT-3000&quot;; &quot;GLO-3004&quot; ]
+  [ &quot;IFT-2002&quot;; &quot;GIF-1003&quot;; &quot;IFT-1006&quot;; &quot;IFT-2008&quot;; &quot;GLO-2100&quot; ];;
+- : bool = true
+</code></p>
+            <p><code># verif_pre bcours
+  [ &quot;IFT-3000&quot;; &quot;GLO-3004&quot; ]
+  [ &quot;IFT-2002&quot;; &quot;GLO-2100&quot; ];;
+- : bool = false
+</code></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="odoc-spec">
+      <div class="spec value anchored" id="val-coherence_pgm"><a href="#val-coherence_pgm"
+          class="anchor"></a><code><span><span class="keyword">val</span> coherence_pgm : <span><span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-cours">GcpLib.Gcp.cours</a> list</span> <span class="arrow">&#45;&gt;</span></span> <span><a href="../../gcpLib@e28fb470910f/GcpLib/Gcp/index.html#type-programme">GcpLib.Gcp.programme</a> <span class="arrow">&#45;&gt;</span></span> bool</span></code>
+      </div>
+      <div class="spec-doc">
+        <p><code>coherence_pgm bours pgm</code> teste la cohérence d'un programme <code>pgm</code>, étant donné un
+          bassin de cours <code>bcours</code>:</p>
+        <ul>
+          <li>tous les cours mentionnés dans <code>pgm</code> existent dans <code>bcours</code>;</li>
+          <li>les différents sous-totaux de crédits sont cohérents;</li>
+          <li>tous les cours mentionnés dans les concentrations de <code>pgm</code> ne sont pas mentionnés dans partie
+            obligatoire du programme, mais plutôt dans la partie optionnel ou hors-discipline;</li>
+          <li>tous les préalables des cours obligatoires se retrouvent dans la partie obligatoire du programme;</li>
+          <li>tous les préalables de cours optionnels se retrouvent soit dans la partie obligatoire du programme, soit
+            dans la partie optionnelle.</li>
+        </ul>
+        <ul class="at-tags">
+          <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
+            <p>étant donné que cette fonction fait appel à plusieurs autres fonctions du Tp qui soulèvent des
+              exceptions; par exemple, si un des cours présent dans <code>pgm</code> n'est pas dans le bassin de cours,
+              une exception sera forcément soulevée (donc, comme pour les autres fonctions, la fonction
+              <code>coherence_pgm</code> n'est pas censée soulever des exceptions).</p>
+            <p>Exemples:</p>
+            <p><code># coherence_pgm bcours b_ift;;
+- : bool = true 
+</code></p>
+            <p><code># coherence_pgm bcours b_glo;;
+- : bool = true 
+</code></p>
+            <p><code># coherence_pgm bcours c_ift;;
+- : bool = true 
+</code></p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
