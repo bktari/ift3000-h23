@@ -14,7 +14,7 @@
 <body class="odoc">
   <header class="odoc-preamble">
     <h1>Module <code><span>GcpLib.Gcp</span></code></h1>
-    <p>TPs Hiver 2021 - Langages de programmation (IFT-3000)</p>
+    <p>Hiver 2021 - Langages de programmation (IFT-3000)</p>
   </header>
   <div class="odoc-content">
     <p>Gestion de cours et de programmes.</p>
@@ -27,9 +27,9 @@
         <p>Exception utilisée par le correcteur automatique.</p>
       </div>
     </div>
-    <p>-------------------------------------------------------------------------</p>
+    <p>------------------------------------------------------------------------</p>
     <p>Structures de données</p>
-    <p>-------------------------------------------------------------------------</p>
+    <p>------------------------------------------------------------------------</p>
     <div class="odoc-spec">
       <div class="spec type anchored" id="type-cours"><a href="#type-cours"
           class="anchor"></a><code><span><span class="keyword">type</span> cours</span><span> = <a href="#type-num_cours">num_cours</a> * <a href="#type-desc_cours">desc_cours</a></span></code>
@@ -93,7 +93,7 @@
           <li id="type-desc_cours.dom" class="def record field anchored"><a href="#type-desc_cours.dom"
               class="anchor"></a><code><span>dom : <span><a href="#type-domaine">domaine</a> list</span>;</span></code>
             <div class="def-doc"><span class="comment-delim">(*</span>
-              <p>Domaine d'application du cours.</p><span class="comment-delim">*)</span>
+              <p>Domaines de savoir qu'on retrouve dans le cours.</p><span class="comment-delim">*)</span>
             </div>
           </li>
         </ol><code><span>}</span></code>
@@ -226,7 +226,7 @@
         </ol>
       </div>
       <div class="spec-doc">
-        <p>Type permettant de représenter les sessions d'études. https://www.ulaval.ca/etudes/formules-denseignement</p>
+        <p>Type permettant de représenter les sessions d'études.</p>
       </div>
     </div>
     <div class="odoc-spec">
@@ -296,7 +296,8 @@
         </ol>
       </div>
       <div class="spec-doc">
-        <p>Type permettant de représenter des formules d'enseignement.</p>
+        <p>Type permettant de représenter des formules d'enseignement.
+          https://www.ulaval.ca/etudes/formules-denseignement</p>
       </div>
     </div>
     <div class="odoc-spec">
@@ -427,6 +428,12 @@
               class="anchor"></a><code><span>| </span><span><span class="constructor">ECO</span></span></code>
             <div class="def-doc"><span class="comment-delim">(*</span>
               <p>Économie.</p><span class="comment-delim">*)</span>
+            </div>
+          </li>
+          <li id="type-domaine.ADM" class="def variant constructor anchored"><a href="#type-domaine.ADM"
+              class="anchor"></a><code><span>| </span><span><span class="constructor">ADM</span></span></code>
+            <div class="def-doc"><span class="comment-delim">(*</span>
+              <p>Administration.</p><span class="comment-delim">*)</span>
             </div>
           </li>
         </ol>
@@ -575,9 +582,9 @@
         </ol>
       </div>
     </div>
-    <p>-------------------------------------------------------------------------</p>
+    <p>------------------------------------------------------------------------</p>
     <p>Interface: fonctions exportées</p>
-    <p>-------------------------------------------------------------------------</p>
+    <p>------------------------------------------------------------------------</p>
     <p>Fonctions utilitaires exportées (pour pouvoir les tester/utiliser dans l'interpréteur)</p>
     <div class="odoc-spec">
       <div class="spec value anchored" id="val-(++)"><a href="#val-(++)"
@@ -609,7 +616,7 @@
           class="anchor"></a><code><span><span class="keyword">val</span> eql : <span><span><span class="type-var">'a</span> list</span> <span class="arrow">&#45;&gt;</span></span> <span><span><span class="type-var">'a</span> list</span> <span class="arrow">&#45;&gt;</span></span> bool</span></code>
       </div>
       <div class="spec-doc">
-        <p><code>eql l1 l2</code> retourne vrai si els 2 listes <code>l1</code> et <code>l2</code> comprennent les mêmes
+        <p><code>eql l1 l2</code> retourne vrai si les 2 listes <code>l1</code> et <code>l2</code> comprennent les mêmes
           éléments, indépendemment de l'ordre de leur apparition.</p>
       </div>
     </div>
@@ -657,7 +664,8 @@
           <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
             <p>un des 2 cours <code>nc1</code> ou <code>nc2</code> n'est pas défini dans <code>bcours</code>
               (l'exception pourrait avoir été soulevée par une autre fonction appelée dans le corps de
-              <code>nc_eq</code>).</p>
+              <code>nc_eq</code>).
+            </p>
           </li>
         </ul>
       </div>
@@ -672,7 +680,8 @@
         <ul class="at-tags">
           <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
             <p>si <code>m</code> ne respecte pas un des formats proposés dans la documentation de la fonction
-              <code>respecte_motif</code>.</p>
+              <code>respecte_motif</code>.
+            </p>
           </li>
         </ul>
       </div>
@@ -743,18 +752,22 @@
           <li>«Aucun» est considéré comme seulement inclus dans «Aucun»;</li>
           <li>«CRE n» ne peut être inclus que dans un préalable identique;</li>
           <li>«CP <code>c</code>» peut être inclus dans un «CP» similaire, ou un «CCP» associé au même cours
-            <code>c</code>;</li>
+            <code>c</code>;
+          </li>
           <li>«CCP <code>c</code>» ne peut être inclus que dans un préalable identique;</li>
           <li>un prérequis <code>pr</code> de type «CP», «CCP», ou «CRE» est inclus dans un prérequis de type «OU
             <code>lpr</code>», ou «ET <code>lpr</code>», si on retrouve un prérequis
             <code>pr</code><sub><code>2</code></sub> dans la liste <code>lpr</code> tel que <code>pr</code> est inclus
-            dans <code>pr</code><sub><code>2</code></sub>;</li>
+            dans <code>pr</code><sub><code>2</code></sub>;
+          </li>
           <li>un prérequis <code>pr</code> de type «OU» est inclus dans un prérequis de type «ET <code>lpr</code>» si on
             retrouve un prérequis <code>pr</code><sub><code>2</code></sub> dans la liste <code>lpr</code> tel que
-            <code>pr</code> est inclus dans <code>pr</code><sub><code>2</code></sub>;</li>
+            <code>pr</code> est inclus dans <code>pr</code><sub><code>2</code></sub>;
+          </li>
           <li>un prérequis <code>pr</code> de type «ET» est inclus dans un prérequis de type «OU <code>lpr</code>» si on
             retrouve un prérequis <code>pr</code><sub><code>2</code></sub> dans la liste <code>lpr</code> tel que
-            <code>pr</code> est inclus dans <code>pr</code><sub><code>2</code></sub>;</li>
+            <code>pr</code> est inclus dans <code>pr</code><sub><code>2</code></sub>;
+          </li>
           <li>un prérequis <code>pr</code> de type «OU <code>lpr</code><sub><code>1</code></sub>» est inclus dans un
             prérequis de type «OU <code>lpr</code><sub><code>2</code></sub>» si soit pour tous les prérequis
             <code>pr</code><sub><code>1</code></sub> présents dans <code>lpr</code><sub><code>1</code></sub>, on
@@ -762,7 +775,8 @@
             <code>lpr</code><sub><code>2</code></sub> tel que <code>pr</code><sub><code>1</code></sub> est inclus dans
             <code>pr</code><sub><code>2</code></sub>, soit on retrouve un prérequis
             <code>pr</code><sub><code>2</code></sub> dans la liste <code>lpr</code><sub><code>2</code></sub> tel que
-            <code>pr</code> est inclus dans <code>pr</code><sub><code>2</code></sub>;</li>
+            <code>pr</code> est inclus dans <code>pr</code><sub><code>2</code></sub>;
+          </li>
           <li>un prérequis <code>pr</code> de type «ET <code>lpr</code><sub><code>1</code></sub>» est inclus dans un
             prérequis de type «ET <code>lpr</code><sub><code>2</code></sub>» si soit pour tous les prérequis
             <code>pr</code><sub><code>1</code></sub> présents dans <code>lpr</code><sub><code>1</code></sub>, on
@@ -770,11 +784,13 @@
             <code>lpr</code><sub><code>2</code></sub> tel que <code>pr</code><sub><code>1</code></sub> est inclus dans
             <code>pr</code><sub><code>2</code></sub>, soit on retrouve un prérequis
             <code>pr</code><sub><code>2</code></sub> dans la liste <code>lpr</code><sub><code>2</code></sub> tel que
-            <code>pr</code> est inclus dans <code>pr</code><sub><code>2</code></sub>.</li>
+            <code>pr</code> est inclus dans <code>pr</code><sub><code>2</code></sub>.
+          </li>
         </ul>
         <p>Remarque: il n'est pas nécessaire de valider que tous les cours mentionnés éventuellement dans
           <code>pr</code> ou <code>pr'</code> respectent le format ###-$$$$ (autrement dit, la fonction
-          <code>existe_pr</code> n'est pas censée soulever des exceptions).</p>
+          <code>existe_pr</code> n'est pas censée soulever des exceptions).
+        </p>
       </div>
     </div>
     <div class="odoc-spec">
@@ -784,10 +800,12 @@
       <div class="spec-doc">
         <p><code>lc_dans_pr pr</code> retourne la liste des numéros de cours mentionnés dans le préalable
           <code>pr</code>. Le résultat ne comprend qu'une seule occurence de chaque cours; et l'ordre des numéros de
-          cours n'importe pas.</p>
+          cours n'importe pas.
+        </p>
         <p>Remarque: il n'est pas nécessaire de valider que tous les cours mentionnés éventuellement dans
           <code>pr</code> respectent le format ###-$$$$ (autrement dit, la fonction <code>lc_dans_pr</code> n'est pas
-          censée soulever des exceptions).</p>
+          censée soulever des exceptions).
+        </p>
       </div>
     </div>
     <div class="odoc-spec">
@@ -800,7 +818,8 @@
           envisagés, un préalable <code>pr</code> est respecté.</p>
         <p>Remarque: il n'est pas nécessaire de valider que tous les cours mentionnés dans <code>lco</code>,
           <code>lc</code> et éventuellement dans <code>pr</code> respectent le format ###-$$$$ (autrement dit, la
-          fonction <code>respecte_pr</code> n'est pas censée soulever des exceptions).</p>
+          fonction <code>respecte_pr</code> n'est pas censée soulever des exceptions).
+        </p>
       </div>
     </div>
     <div class="odoc-spec">
@@ -817,7 +836,8 @@
             <p>si un des cours présents dans <code>lc</code> n'est pas défini dans <code>bcours</code> (l'exception
               pourrait avoir été soulevée par une autre fonction appelée dans le corps de <code>total_cr</code>). Par
               contre, il n'est pas nécessaire de valider que tous les cours mentionnés dans <code>lc</code> ou
-              <code>bcours</code> respectent le format ###-$$$$.</p>
+              <code>bcours</code> respectent le format ###-$$$$.
+            </p>
           </li>
         </ul>
       </div>
@@ -849,7 +869,8 @@
                 href="#val-respecte_motif"><code>respecte_motif</code></a>. De même, si un cours mentionné dans
               <code>bcours</code> ne respecte pas le format ###-$$$$, une exception sera soulevée. À notez que dans les
               2 cas de figure, l'exception sera sûrement soulevée par une fonction appelée dans le corps de la fonction
-              <code>ret_bcours_lmot</code>.</p>
+              <code>ret_bcours_lmot</code>.
+            </p>
           </li>
         </ul>
       </div>
@@ -863,7 +884,8 @@
           les cours qui sont offerts dans une des sessions présentes dans <code>lses</code>, et qui sont donnés par une
           des formules d'enseignement présentes dans <code>lfe</code>. Si l'une des listes <code>lses</code> ou
           <code>lfe</code> est vide, on considéra qu'elles comprennent respectivement les valeurs «Annee» et «FEX».
-          L'ordre des éléments de la liste résultante n'importe pas.</p>
+          L'ordre des éléments de la liste résultante n'importe pas.
+        </p>
         <p>Remarque: il n'est pas nécessaire de valider que tous les cours mentionnés dans <code>bcours</code>
           respectent le format ###-$$$$ (autrement dit, la fonction <code>ret_bcours_lses_lfe</code> n'est pas censée
           soulever des exceptions).</p>
@@ -891,7 +913,8 @@
           dont le préalable inclut <code>pr</code>. L'ordre des éléments de la liste résultante n'importe pas.</p>
         <p>Remarque: il n'est pas nécessaire de valider que tous les cours mentionnés dans <code>bcours</code> et
           éventuellement dans <code>pr</code> respectent le format ###-$$$$ (autrement dit, la fonction
-          <code>ret_bcours_pr</code> n'est pas censée soulever des exceptions).</p>
+          <code>ret_bcours_pr</code> n'est pas censée soulever des exceptions).
+        </p>
       </div>
     </div>
     <div class="odoc-spec">
@@ -905,10 +928,12 @@
           admet un cours équivalent qui est présent dans la liste <code>lco</code>, il ne doit non plus être retenu), et
           dont les préalables sont respectés. Aussi, dans la liste résultante, si un cours est mentionné dans l'attribut
           «conco» d'un des cours <code>c</code> de la liste, il doit alors soit figurer dans cette liste, soit figurer
-          dans <code>lco</code>. Par ailleurs, l'ordre des éléments de la liste résultante n'importe pas.</p>
+          dans <code>lco</code>. Par ailleurs, l'ordre des éléments de la liste résultante n'importe pas.
+        </p>
         <p>Remarque: il n'est pas nécessaire de valider que tous les cours mentionnés dans <code>bcours</code> et
           <code>lco</code> respectent le format ###-$$$$ (autrement dit, la fonction <code>ret_bcours_admissibles</code>
-          n'est pas censée soulever des exceptions).</p>
+          n'est pas censée soulever des exceptions).
+        </p>
       </div>
     </div>
     <div class="odoc-spec">
@@ -938,7 +963,8 @@
           composé du nombre de crédits obtenus avec la liste <code>lc</code>, considérant la règle <code>regle</code>,
           d'une nouvelle version de la règle qui tient compte des cours de <code>lc</code> qui ont partiellement ou
           totalement respecté la règle, ainsi que la liste des cours de <code>lc</code> qui ne sont concernés par la
-          règle.</p>
+          règle.
+        </p>
       </div>
     </div>
     <div class="odoc-spec">
@@ -947,8 +973,9 @@
       </div>
       <div class="spec-doc">
         <p><code>conc_obtenues bcours pgm lco</code> la liste des concentrations obtenues dans le programme
-          <code>pgm</code> étant donnée la liste <code>lco</code> de cours réussis. Dans ce Tp, on suppose qu'un même
-          cours peut contribuer à l'atteinte de deux concentrations ou plus.</p>
+          <code>pgm</code> étant donnée la liste <code>lco</code> de cours réussis. Dans ce projet, on suppose qu'un
+          même cours peut contribuer à l'atteinte de deux concentrations ou plus.
+        </p>
       </div>
     </div>
     <div class="odoc-spec">
@@ -979,7 +1006,8 @@
       <div class="spec-doc">
         <p><code>respecte_conco bcours lco lc</code> permet de tester si les cours présents dans la liste
           <code>lc</code> sont corrects par rapport à l'exigence des «cours concomitants», considérant les cours
-          <code>lco</code> déjà réussis.</p>
+          <code>lco</code> déjà réussis.
+        </p>
       </div>
     </div>
     <div class="odoc-spec">
@@ -1000,7 +1028,8 @@
           dans son cheminement, il doit le respecter; aussi, il doit être offert à la session <code>session</code> avec
           une formule d'enseignement précisée dans la liste <code>lfe</code> (si cette liste est vide, il n'y a aucune
           contrainte sur la formule d'enseignement). De plus, chaque combinaison de cours doit totaliser un nombre de
-          crédits respectant le choix <code>ch</code> de type <a href="#type-choix"><code>choix</code></a>.</p>
+          crédits respectant le choix <code>ch</code> de type <a href="#type-choix"><code>choix</code></a>.
+        </p>
       </div>
     </div>
     <div class="odoc-spec">
@@ -1017,7 +1046,7 @@
   <span><span>(<span><a href="#type-num_cours">num_cours</a> list</span> * <span>string list</span>)</span> list</span></span></code>
       </div>
       <div class="spec-doc">
-        <p><code>planifier_session bcours pgm lco session lfe ch lmm lc_hp</code> retourne la liste des listes de cours
+        <p><code>planifier_session bcours pgm lco session lfe ch lm lc_hp</code> retourne la liste des listes de cours
           admissibles pour l'inscription à la session <code>session</code>, avec une formule d'enseignement précisée
           dans la liste <code>lfe</code> (si cette liste est vide, il n'y a aucune contrainte sur la formule
           d'enseignement), considérant la liste <code>lco</code> des cours déjà réussis. Chaque liste de cours
