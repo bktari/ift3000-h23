@@ -705,19 +705,22 @@ let call_with_timeout ?(time_in_seconds = 3) f =
 
 let testg (nom_f, f, jeu_donnees, jeu_donnees_exception_op) =
   let comment_l = ref [] in
-  let ok = ref false in
+  let ok = ref true in
   let excep = ref false in
 
   try
     List.iter
       (fun (p, res, cas_test) ->
         match call_with_timeout (fun () -> f p res) with
-        | true -> ok := true
+        | true -> ()
         | false ->
+            ok := false;
             comment_l := !comment_l @ [ cas_test ^ " --> incorrect!" ]
         | exception Non_Implante s ->
+            ok := false;
             raise (Non_Implante s)
         | exception e ->
+            ok := false;
             excep := true;
             comment_l :=
               !comment_l
@@ -738,7 +741,7 @@ let testg (nom_f, f, jeu_donnees, jeu_donnees_exception_op) =
                 !comment_l
                 @ [ cas_test ^ " --> incorrect! Devrait soulever exception!" ]
             with
-            | Failure _ -> ok := true
+            | Failure _ -> ()
             | Timeout ->
                 ok := false;
                 excep := true;
