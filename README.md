@@ -8,7 +8,13 @@ L'[énoncé](./énoncé.pdf) est disponible dans le présent dépôt, à la raci
 
 ### Télécharger le code du projet
 
-Vous pouvez soit cloner le projet avec git via `git clone https://github.com/bktari/ift3000-h23.git`, soit télécharger le projet comme fichier Zip en visitant le même URL.
+Vous pouvez soit cloner le projet avec `git` via `git clone https://github.com/bktari/ift3000-h23.git`, soit télécharger le projet comme fichier Zip en visitant le même URL.
+
+Considérons que vous travaillez avec la machine virtuelle du cours, que vous avez ouvert un terminal `Linux`, que vous vous situez, au niveau de l'arborescence du disque dur, au niveau `/home/ift-3000` et que vous avez saisi ce qui suit:
+
+```git clone https://github.com/bktari/ift3000-h23.git```
+
+Ceci aura pour effet de créer un nouveau répertoire nommé `ift3000-tp1` et d'y déposer un clone (une copie) du projet.
 
 ### Consulter la documentation
 
@@ -16,11 +22,17 @@ On vous invite à consulter la [Documentation](https://bktari.github.io/ift3000-
 
 ## Démarche à suivre
 
-Dans ce qui suit, on suppose que vous utilisez VSCode. Aussi, toutes les commandes mentionnées dans le présent document sont à exécuter dans un terminal.
+Dans ce qui suit, on suppose que vous utilisez VSCode. Aussi, à moins de mention contraire, toutes les commandes mentionnées dans le présent document sont à exécuter dans un terminal (typiquement, celui que vous aurez ouvert dans VSCode).
 
 ### Lancer VScode
 
+Dans un terminal `Linux`, à partir du dossier où vous avez copié (cloné) une copie du projet, soit `/home/ift-3000/ift3000-tp1`, tapez ce qui suit pour lancer VSCode (n'oubliez pas le point):
+
+```code .```
+
 #### Ouvrir un terminal 
+
+Dans la barre de tâche, qui se situe à gauche dans `VSCode`, cliquez sur l'icone représentant un chameau, puis cliquez sur `Open a sandboxed terminal`; par la suite, cliquez sur le premier icone représentant 2 feuilles de papiers superposées pour retrouver l'explorateur de `VSCode`, et les fichiers du projet.
 
 ### Tester les fonctions du module `Gcp` réalisé en 2021
 
@@ -34,11 +46,11 @@ Dans ce qui suit, on suppose que vous utilisez VSCode. Aussi, toutes les command
 
 #### Tester les fonctions
 
-Un ensemble d'exemples est proposé à la fin du fichier `gcp.ml` (qui se trouve dans le sous-dossier `gcp\lib`).
+Un ensemble d'exemples est proposé à la fin du fichier `gcp.ml` (qui se trouve dans le sous-dossier `gcp\lib`). Vous pouvez alors copier-coller, dans l'interpréteur,  chaque expression à tester/évaluer, ou y allez avec le raccourci `Shift-Entrée`,  en sélectionnant au préalable l'expression à évaluer.
 
 ### Compléter les fonctions du projet
 
-#### Ouvrir le fichier `tp1.ml`
+#### Ouvrir le fichier `tp1.ml` (dossier `lib`)
 
 #### Compléter/programmer une fonction
 
