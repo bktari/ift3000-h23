@@ -14,7 +14,7 @@ Considérons que vous travaillez avec la machine virtuelle du cours, que vous av
 
 ```git clone https://github.com/bktari/ift3000-h23.git```
 
-Ceci aura pour effet de créer un nouveau répertoire nommé `ift3000-tp1` et d'y déposer un clone (une copie) du projet.
+Ceci aura pour effet de créer un nouveau répertoire nommé `ift3000-h23` et d'y déposer un clone (une copie) du projet.
 
 ### Consulter la documentation
 
@@ -26,7 +26,7 @@ Dans ce qui suit, on suppose que vous utilisez VSCode. Aussi, à moins de mentio
 
 ### Lancer VScode
 
-Dans un terminal `Linux`, à partir du dossier où vous avez copié (cloné) une copie du projet, soit `/home/ift-3000/ift3000-tp1`, tapez ce qui suit pour lancer VSCode (n'oubliez pas le point):
+Dans un terminal `Linux`, à partir du dossier où vous avez copié (cloné) une copie du projet, soit `/home/ift-3000/ift3000-h23`, tapez ce qui suit pour lancer VSCode (n'oubliez pas le point):
 
 ```code .```
 
