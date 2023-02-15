@@ -348,8 +348,8 @@ val coherence_cours_conc :
 [coherence_cours_conc lconc lc_ob lc_op lc_exclus] vérifie que les cours
 dans les concentrations [lconc] ne se retrouvent pas dans des cours
 obligatoires, représentés par la liste [lc_ob], mais plutôt dans les cours
-optionnels ou hors discipline représentés resp. par les listes [lc_op] et
-[lc_exclus]. Attention [lc_exclus] pourrait être vide.
+optionnels (donc membre de la liste [lc_op]) ou hors discipline (donc, non
+membre de la liste [lc_exclus])
 
 @raise Failure si un des éléments de [lconc] ou [lc_exclus] ne respecte 
 pas un des formats requis par la fonction [respecte_motif] (définie dans 

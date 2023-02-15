@@ -329,8 +329,8 @@ Exception: Failure &quot;Cours &lt;5&gt; inexistant!&quot;.
       <div class="spec-doc">
         <p><code>coherence_cours_conc lconc lc_ob lc_op lc_exclus</code> vérifie que les cours dans les concentrations
           <code>lconc</code> ne se retrouvent pas dans des cours obligatoires, représentés par la liste
-          <code>lc_ob</code>, mais plutôt dans les cours optionnels ou hors discipline représentés resp. par les listes
-          <code>lc_op</code> et <code>lc_exclus</code>. Attention <code>lc_exclus</code> pourrait être vide.</p>
+          <code>lc_ob</code>, mais plutôt dans les cours optionnels (donc membre de la liste <code>lc_op</code>) ou hors
+          discipline (donc, non membre de la liste <code>lc_exclus</code>)</p>
         <ul class="at-tags">
           <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
             <p>si un des éléments de <code>lconc</code> ou <code>lc_exclus</code> ne respecte pas un des formats requis
