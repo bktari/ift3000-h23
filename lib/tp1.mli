@@ -66,7 +66,7 @@ Exemples:
 val prerequis : cours list -> num_cours -> prealables
 (** 
 [prerequis bcours c] retourne toutes la chaine de prérequis du cours [c]
-considérant une banque de cours [bcours]. Notre que cette chaine de
+considérant une banque de cours [bcours]. Notez que cette chaine de
 prérequis peut mentionner un même cours à plusieurs reprises.
 
 @raise Failure si le cours [c] n'est pas défini dans [bcours] (l'exception 
@@ -349,7 +349,7 @@ val coherence_cours_conc :
 dans les concentrations [lconc] ne se retrouvent pas dans des cours
 obligatoires, représentés par la liste [lc_ob], mais plutôt dans les cours
 optionnels (donc membre de la liste [lc_op]) ou hors discipline (donc, non
-membre de la liste [lc_exclus])
+membre de la liste [lc_exclus] si celle-ci n'est pas vide).
 
 @raise Failure si un des éléments de [lconc] ou [lc_exclus] ne respecte 
 pas un des formats requis par la fonction [respecte_motif] (définie dans 

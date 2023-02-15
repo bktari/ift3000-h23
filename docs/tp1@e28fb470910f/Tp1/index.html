@@ -65,7 +65,7 @@
       </div>
       <div class="spec-doc">
         <p><code>prerequis bcours c</code> retourne toutes la chaine de prérequis du cours <code>c</code> considérant
-          une banque de cours <code>bcours</code>. Notre que cette chaine de prérequis peut mentionner un même cours à
+          une banque de cours <code>bcours</code>. Notez que cette chaine de prérequis peut mentionner un même cours à
           plusieurs reprises.</p>
         <ul class="at-tags">
           <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
@@ -330,7 +330,7 @@ Exception: Failure &quot;Cours &lt;5&gt; inexistant!&quot;.
         <p><code>coherence_cours_conc lconc lc_ob lc_op lc_exclus</code> vérifie que les cours dans les concentrations
           <code>lconc</code> ne se retrouvent pas dans des cours obligatoires, représentés par la liste
           <code>lc_ob</code>, mais plutôt dans les cours optionnels (donc membre de la liste <code>lc_op</code>) ou hors
-          discipline (donc, non membre de la liste <code>lc_exclus</code>)</p>
+          discipline (donc, non membre de la liste <code>lc_exclus</code> si celle-ci n'est pas vide).</p>
         <ul class="at-tags">
           <li class="raises"><span class="at-tag">raises</span> <span class="value">Failure</span>
             <p>si un des éléments de <code>lconc</code> ou <code>lc_exclus</code> ne respecte pas un des formats requis
