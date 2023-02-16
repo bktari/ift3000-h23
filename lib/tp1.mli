@@ -349,7 +349,8 @@ val coherence_cours_conc :
 dans les concentrations [lconc] ne se retrouvent pas dans des cours
 obligatoires, représentés par la liste [lc_ob], mais plutôt dans les cours
 optionnels (donc membre de la liste [lc_op]) ou hors discipline (donc, non
-membre de la liste [lc_exclus] si celle-ci n'est pas vide).
+membre de la liste [lc_exclus] si celle-ci n'est pas vide; ; si elle est vide, 
+aucun cours ne pourrait être considéré comme hors discipline).
 
 @raise Failure si un des éléments de [lconc] ou [lc_exclus] ne respecte 
 pas un des formats requis par la fonction [respecte_motif] (définie dans 
