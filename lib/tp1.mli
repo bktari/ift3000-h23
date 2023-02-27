@@ -306,16 +306,14 @@ qui est défini par [((_,_, total, _),_,_,(n1,e1),(n2,e2),concs)]:
 - les concentrations sont vérifiées;
 - la somme de [n1] et [n2] vaut bien [total].
 Le calcul du nombre de crédits se fait comme suit:
-- Pour une exigence de type [CoursOB(n,l)], il s'agit simplement de calculer
-  la somme des crédits des cours présents dans [l] (qui doit être égale à
-  [n]);
-- Pour une exigence de type [PlageCr(n1,n2,Cours l)], il s'agit de calculer
-  la somme des crédits des cours présents dans [l] (qui doit être comprise
-  entre [n1] et [n2]);
-- Pour une exigence de type [PlageCr(n1,n2,CoursExclus l)], on ne peut calculer
-  de somme de crédits; on peut simplement considérer que la somme est 
-  comprise entre [n1] et [n2]; on doit aussi vérifier que [n2] est bien 
-  supérieure ou égale à [n1].
+- pour une exigence de type [CoursOB(n,l)], la fonction vérifie que
+  le total de crédits des cours présents dans la liste [l] vaut bien [n];
+- pour une exigence de type [PlageCr(n1',n2',Cours l)], la fonction vérifie 
+  que que la valeur [n2'] est bien supérieure ou égale à [n1'] et que le 
+  total de crédits des cours présents dans la liste [l] est bien plus 
+  grand ou égal à [n2'];
+- pour une exigence de type [PlageCr(n1',n2',CoursExclus l)], la fonction 
+  vérifie que [n2'] est bien supérieure ou égale à [n1'].
 
 @raise Failure si un des éléments de [pgm] ne respecte pas un des 
 formats requis par la fonction [respecte_motif] (définie dans [Gcp]). 
